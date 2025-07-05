@@ -42,7 +42,7 @@ const SignUp = () => {
         isFormValid: false,
     };
 
-    const { login } = useContext(authContext);
+    const { login, token } = useContext(authContext);
 
     const { formState, onFormHandler } = useForm(initialForm);
 
@@ -62,7 +62,7 @@ const SignUp = () => {
                 },
                 "POST",
                 formData,
-                true
+                { Authorization: `Bearer ${token}` }
             );
         } catch (err) {
             console.log(err);
