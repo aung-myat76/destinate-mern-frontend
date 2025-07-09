@@ -14,7 +14,7 @@ const UsersPage = () => {
                     import.meta.env.VITE_BACKEND_URL + "/api/users",
                     () => {
                         console.log("fetched data!");
-                        setUsers(data.users);
+                        setUsers(data.users || []);
                     }
                 );
             } catch (err) {
