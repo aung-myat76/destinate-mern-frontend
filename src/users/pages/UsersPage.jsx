@@ -23,6 +23,14 @@ const UsersPage = () => {
         fetchData();
     }, [sendRequest]);
 
+    if (!isLoading && !data) {
+        return (
+            <>
+                <p className="center text-xl">There's no users yet!</p>
+            </>
+        );
+    }
+
     return (
         <>
             {isLoading && <Loading loading={isLoading} />}
