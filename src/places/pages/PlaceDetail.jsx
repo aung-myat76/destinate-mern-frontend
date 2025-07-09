@@ -6,6 +6,17 @@ import Button from "../../shared/components/Button";
 import { useParams } from "react-router-dom";
 import useHttp from "../../shared/hooks/useHttp";
 import Loading from "../../shared/components/Loading";
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// This is needed because Leaflet by default looks for the images in the public folder
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 const MapResizer = () => {
     const map = useMap();
