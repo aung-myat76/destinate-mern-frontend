@@ -12,7 +12,7 @@ const UsersPage = () => {
             try {
                 await sendRequest(
                     import.meta.env.VITE_BACKEND_URL + "/api/users",
-                    () => {
+                    (data) => {
                         console.log("fetched data!");
                         setUsers(data.users || []);
                     }
