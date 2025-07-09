@@ -115,7 +115,7 @@ const PlaceDetail = () => {
                                         place.location?.lng || 96.1735,
                                     ]}
                                     zoom={13}
-                                    style={{ width: "100%", height: "100%", "z-index": 10 }}
+                                    style={{ width: "100%", height: "100%", zIndex: 10 }}
                                 >
                                     <TileLayer
                                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
