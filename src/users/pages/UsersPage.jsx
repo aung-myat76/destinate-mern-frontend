@@ -4,6 +4,7 @@ import useHttp from "../../shared/hooks/useHttp";
 import Loading from "../../shared/components/Loading";
 
 const UsersPage = () => {
+    const [users, setUsers] = useState([]);
     const { isLoading, error, sendRequest, data } = useHttp();
 
     useEffect(() => {
@@ -13,6 +14,7 @@ const UsersPage = () => {
                     import.meta.env.VITE_BACKEND_URL + "/api/users",
                     () => {
                         console.log("fetched data!");
+                        setUsers(data.users);
                     }
                 );
             } catch (err) {
@@ -23,7 +25,7 @@ const UsersPage = () => {
         fetchData();
     }, [sendRequest]);
 
-    if (!isLoading && !data) {
+    if (!isLoading && users.length <= 0) {
         return (
             <>
                 <p className="center text-xl">There's no users yet!</p>
@@ -34,7 +36,9 @@ const UsersPage = () => {
     return (
         <>
             {isLoading && <Loading loading={isLoading} />}
-            {!isLoading && data && <UsersList users={data.users} />}
+            {!isLoading && users && users.length > 0 && (
+                <UsersList users={users} />
+            )}
         </>
     );
 };
