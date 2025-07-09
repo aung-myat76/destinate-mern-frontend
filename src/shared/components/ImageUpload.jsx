@@ -65,7 +65,7 @@ const ImageUpload = ({ id, onInput, placeholder }) => {
                 </div>
                 <Button
                     type="button"
-                    addClass="!bg-red-800"
+                    variant="info"
                     onClick={chooseImageHandler}
                 >
                     Choose Photo

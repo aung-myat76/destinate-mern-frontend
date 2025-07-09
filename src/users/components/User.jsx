@@ -2,35 +2,43 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "../../shared/components/Card";
 import { authContext } from "../../shared/context/auth-context";
+import UserProfileCard from "../../shared/components/UserProfileCard";
 
 const User = ({ user }) => {
     const { userId } = useContext(authContext);
 
     return (
         <li>
-            <Card addClass="hover:bg-stone-800">
+            <UserProfileCard user={user} />
+            {/* <Card addClass="hover:bg-stone-800 mb-8 my-5">
                 <Link to={`/${user.id}/places`}>
-                    <div className="flex items-center">
+                    <div className="flex flex-col shadow-lg">
                         <img
-                            className="w-[50px] h-[50px] rounded-full object-cover"
+                            className="w-[100%] h-[50%] rounded-ss-xl rounded-se-xl object-cover"
                             src={`${import.meta.env.VITE_BACKEND_URL}/${
                                 user.profile
                             }`}
                             alt="profile"
                         />
-                        <div className="ml-3">
+                        <div className="ml-3 my-auto py-3 px-2">
                             <h2
                                 className={`text-lg font-bold ${
-                                    user._id === userId ? "text-blue-900" : null
+                                    user._id === userId ? "text-blue-700" : null
                                 }`}
                             >
-                                {user.name}
+                                Username: {user.name}
                             </h2>
-                            <p>{user.places.length} places</p>
+                            <p>
+                                <span className="underline">{user.name}</span>{" "}
+                                have posted{" "}
+                                <span className="font-bold text-yellow-500">
+                                    {user.places.length} places
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </Link>
-            </Card>
+            </Card> */}
         </li>
     );
 };

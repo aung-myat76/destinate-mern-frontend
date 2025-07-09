@@ -6,7 +6,7 @@ const UsersList = ({ users }) => {
 
     if (users.length > 0) {
         content = (
-            <ul>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {users.map((user) => (
                     <User key={user.id} user={user} />
                 ))}

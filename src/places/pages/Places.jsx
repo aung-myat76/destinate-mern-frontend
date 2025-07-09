@@ -35,7 +35,7 @@ const Places = () => {
 
     return (
         <>
-            {isLoading && <Loading />}
+            {isLoading && <Loading loading={isLoading} />}
             {!isLoading && data && loadedPlaces && (
                 <PlacesList
                     places={loadedPlaces}

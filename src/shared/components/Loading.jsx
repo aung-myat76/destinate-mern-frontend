@@ -1,10 +1,16 @@
 import React from "react";
+import { CSSTransition } from "react-transition-group";
 
-const Loading = () => {
+const Loading = ({ loading }) => {
     return (
-        <div className="text-3xl text-stone-900 font-bold text-center">
-            Loading...
-        </div>
+        <CSSTransition
+            in={loading}
+            timeout={300}
+            classNames="spinner"
+            unmountOnExit
+        >
+            <div className="loader"></div>
+        </CSSTransition>
     );
 };
 

@@ -14,6 +14,7 @@ import {
 } from "../../util/validators";
 import useForm from "../../shared/hooks/useForm";
 import useHttp from "../../shared/hooks/useHttp";
+import FormCard from "../../shared/components/FormCard";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -64,40 +65,37 @@ const Login = () => {
     };
 
     return (
-        <Card addClass="py-5 px-3 rounded-xl bg-stone-900">
-            <div>
-                <h2 className="headerText">Login to your account</h2>
-            </div>
-            <form onSubmit={submitFormHandler}>
-                <Input
-                    id="email"
-                    placeholder="Email"
-                    errorText="Your email is incorrect!"
-                    validators={[VALIDATOR_EMAIL()]}
-                    onFormHandler={onFormHandler}
-                />
-                <Input
-                    id="password"
-                    placeholder="password"
-                    errorText="Your password is wrong!"
-                    validators={[VALIDATOR_MINLENGTH(6)]}
-                    onFormHandler={onFormHandler}
-                />
-                <Button
-                    addClass="bg-transparent text-center text-stone-500 block font-normal hover:text-stone-400 hover:bg-transparent"
-                    to={"/account/create"}
-                >
-                    Sign up
-                </Button>
-                <Button
-                    addClass="block bg-blue-900 w-[50%] m-auto hover:bg-blue-800"
-                    type="submit"
-                    disabled={!formState.isFormValid}
-                >
-                    {isLoading ? "Loading..." : "Login"}
-                </Button>
-            </form>
-        </Card>
+        <FormCard title="Login" onSubmit={submitFormHandler}>
+            <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                errorText="Your email is incorrect!"
+                validators={[VALIDATOR_EMAIL()]}
+                onFormHandler={onFormHandler}
+            />
+            <Input
+                id="password"
+                type="password"
+                placeholder="password"
+                errorText="Your password is wrong!"
+                validators={[VALIDATOR_MINLENGTH(6)]}
+                onFormHandler={onFormHandler}
+            />
+            <Button
+                className="bg-transparent text-center text-stone-500 block font-normal hover:text-stone-400 hover:bg-transparent"
+                to={"/account/create"}
+            >
+                Sign up
+            </Button>
+            <Button
+                variant="login"
+                type="submit"
+                disabled={!formState.isFormValid}
+            >
+                {isLoading ? "Logging in..." : "Login"}
+            </Button>
+        </FormCard>
     );
 };
 

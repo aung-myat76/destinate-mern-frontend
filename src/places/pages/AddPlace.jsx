@@ -10,6 +10,7 @@ import useForm from "../../shared/hooks/useForm";
 import useHttp from "../../shared/hooks/useHttp";
 import { authContext } from "../../shared/context/auth-context";
 import ImageUpload from "../../shared/components/ImageUpload";
+import FormCard from "../../shared/components/FormCard";
 
 const AddPlace = () => {
     const navigate = useNavigate();
@@ -67,43 +68,42 @@ const AddPlace = () => {
     };
 
     return (
-        <Card addClass="py-5 px-3 rounded-xl bg-stone-900">
-            {/* <div>
-                <h2 className="headerText">Create Your own places</h2>
-            </div> */}
-            <form onSubmit={submitFormHandler}>
-                <ImageUpload
-                    id="image"
-                    onInput={onFormHandler}
-                    placeholder="/assets/unknownPlace.jpg"
-                />
-                <Input
-                    id="name"
-                    placeholder="Name of the Place"
-                    errorText="Place give the name of the place!"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    onFormHandler={onFormHandler}
-                />
-                <Input
-                    id="address"
-                    placeholder="Address"
-                    errorText="Where it is ?"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    onFormHandler={onFormHandler}
-                />
-                <Input
-                    id="description"
-                    placeholder="Description"
-                    inputType="textarea"
-                    validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
-                    errorText="Place subscribe your place description at least in 5 letters!"
-                    onFormHandler={onFormHandler}
-                />
-                <Button type="submit" disabled={!formState.isFormValid}>
-                    {isLoading ? "Loading..." : "Add Place"}
-                </Button>
-            </form>
-        </Card>
+        <FormCard title="Add Place" onSubmit={submitFormHandler}>
+            <ImageUpload
+                id="image"
+                onInput={onFormHandler}
+                placeholder="/assets/unknownPlace.jpg"
+            />
+            <Input
+                id="name"
+                placeholder="Name of the Place"
+                errorText="Place give the name of the place!"
+                validators={[VALIDATOR_REQUIRE()]}
+                onFormHandler={onFormHandler}
+            />
+            <Input
+                id="address"
+                placeholder="Address"
+                errorText="Where it is ?"
+                validators={[VALIDATOR_REQUIRE()]}
+                onFormHandler={onFormHandler}
+            />
+            <Input
+                id="description"
+                placeholder="Description"
+                inputType="textarea"
+                validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
+                errorText="Place subscribe your place description at least in 5 letters!"
+                onFormHandler={onFormHandler}
+            />
+            <Button
+                variant="create"
+                type="submit"
+                disabled={!formState.isFormValid}
+            >
+                {isLoading ? "Adding Place..." : "Add Place"}
+            </Button>
+        </FormCard>
     );
 };
 

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Navigation from "../shared/components/Navigation";
 import HamburgerMenu from "../shared/components/HamburgerMenu";
 import Drawer from "../shared/components/Drawer";
 import Overlay from "../shared/components/Overlay";
+import Loading from "../shared/components/Loading";
 
 const MainLayout = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -30,9 +31,13 @@ const MainLayout = () => {
                     <Navigation />
                 </div>
             </header>
-            {isDrawerOpen && <Drawer onClose={closeDrawerHandler} />}
+            {isDrawerOpen && (
+                <Drawer show={isDrawerOpen} onClose={closeDrawerHandler} />
+            )}
             <main className="center">
-                <Outlet />
+                <Suspense fallback={<Loading />}>
+                    <Outlet />
+                </Suspense>
             </main>
         </>
     );

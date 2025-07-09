@@ -10,6 +10,7 @@ import useHttp from "../../shared/hooks/useHttp";
 import Loading from "../../shared/components/Loading";
 import Card from "../../shared/components/Card";
 import { authContext } from "../../shared/context/auth-context";
+import FormCard from "../../shared/components/FormCard";
 
 const UpdatePlace = () => {
     const { placeId } = useParams();
@@ -92,45 +93,39 @@ const UpdatePlace = () => {
 
     return (
         <div>
-            {isLoading && <Loading />}
+            {isLoading && <Loading loading={isLoading} />}
             {!isLoading && data && loadedPlace && (
-                <>
-                    <div>
-                        <h2 className="headerText">Update your place</h2>
-                    </div>
-                    <Card addClass="py-5 px-3 rounded-xl bg-stone-900">
-                        <form onSubmit={submitFormHandler}>
-                            <Input
-                                id="name"
-                                placeholder="Name of the Place"
-                                errorText="Place give the name of the place!"
-                                validators={[VALIDATOR_REQUIRE()]}
-                                onFormHandler={onFormHandler}
-                                initialValue={loadedPlace.name}
-                                initialValidity={true}
-                            />
-                            <Input
-                                id="description"
-                                placeholder="Description"
-                                inputType="textarea"
-                                validators={[
-                                    VALIDATOR_REQUIRE(),
-                                    VALIDATOR_MINLENGTH(5),
-                                ]}
-                                errorText="Place subscribe your place description at least in 5 letters!"
-                                onFormHandler={onFormHandler}
-                                initialValue={loadedPlace.description}
-                                initialValidity={true}
-                            />
-                            <Button
-                                type="submit"
-                                disabled={!formState.isFormValid}
-                            >
-                                Update Place
-                            </Button>
-                        </form>
-                    </Card>
-                </>
+                <FormCard title="Update place" onSubmit={submitFormHandler}>
+                    <Input
+                        id="name"
+                        placeholder="Name of the Place"
+                        errorText="Place give the name of the place!"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        onFormHandler={onFormHandler}
+                        initialValue={loadedPlace.name}
+                        initialValidity={true}
+                    />
+                    <Input
+                        id="description"
+                        placeholder="Description"
+                        inputType="textarea"
+                        validators={[
+                            VALIDATOR_REQUIRE(),
+                            VALIDATOR_MINLENGTH(5),
+                        ]}
+                        errorText="Place subscribe your place description at least in 5 letters!"
+                        onFormHandler={onFormHandler}
+                        initialValue={loadedPlace.description}
+                        initialValidity={true}
+                    />
+                    <Button
+                        variant="info"
+                        type="submit"
+                        disabled={!formState.isFormValid}
+                    >
+                        {isLoading ? "Updating Place..." : "Update Place"}
+                    </Button>
+                </FormCard>
             )}
         </div>
     );

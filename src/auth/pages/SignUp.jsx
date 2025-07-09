@@ -16,6 +16,7 @@ import useForm from "../../shared/hooks/useForm";
 import Loading from "../../shared/components/Loading";
 import useHttp from "../../shared/hooks/useHttp";
 import ImageUpload from "../../shared/components/ImageUpload";
+import FormCard from "../../shared/components/FormCard";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -57,7 +58,7 @@ const SignUp = () => {
             formData.append("image", formState.inputs.image.value);
             await sendRequest(
                 import.meta.env.VITE_BACKEND_URL + "/sign-up",
-                () => {
+                (data) => {
                     navigate("/account");
                 },
                 "POST",
@@ -70,56 +71,50 @@ const SignUp = () => {
     };
 
     return (
-        <div className="center  flex-col">
-            <div>
-                <h2 className="headerText text-stone-900">
-                    Create your own account
-                </h2>
-            </div>
-            <Card addClass="py-5 px-3 rounded-xl bg-stone-900">
-                <form onSubmit={submitFormHandler}>
-                    <ImageUpload
-                        id="image"
-                        onInput={onFormHandler}
-                        placeholder="/assets/unknownProfile.jpg"
-                    />
-                    <Input
-                        id="name"
-                        placeholder="Name"
-                        errorText="Who are you ?"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        onFormHandler={onFormHandler}
-                    />
-                    <Input
-                        id="email"
-                        placeholder="Email"
-                        errorText="Your email is incorrect!"
-                        validators={[VALIDATOR_EMAIL()]}
-                        onFormHandler={onFormHandler}
-                    />
-                    <Input
-                        id="password"
-                        placeholder="password"
-                        errorText="Your password must be at least 6 characters"
-                        validators={[VALIDATOR_MINLENGTH(6)]}
-                        onFormHandler={onFormHandler}
-                    />
-                    <Button
-                        addClass="bg-transparent text-center text-stone-500 block font-normal hover:text-stone-400 hover:bg-transparent"
-                        to={"/account"}
-                    >
-                        Login
-                    </Button>
-                    <Button
-                        addClass="block bg-green-900 w-[50%] m-auto hover:bg-green-800"
-                        type="submit"
-                        disabled={!formState.isFormValid}
-                    >
-                        {isLoading ? "Loading..." : "Sign up"}
-                    </Button>
-                </form>
-            </Card>
-        </div>
+        <FormCard title="Sign up" onSubmit={submitFormHandler}>
+            <ImageUpload
+                id="image"
+                onInput={onFormHandler}
+                placeholder="/assets/unknownProfile.jpg"
+            />
+            <Input
+                id="name"
+                type="text"
+                placeholder="Name"
+                errorText="Who are you ?"
+                validators={[VALIDATOR_REQUIRE()]}
+                onFormHandler={onFormHandler}
+            />
+            <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                errorText="Your email is incorrect!"
+                validators={[VALIDATOR_EMAIL()]}
+                onFormHandler={onFormHandler}
+            />
+            <Input
+                id="password"
+                type="password"
+                placeholder="password"
+                errorText="Your password must be at least 6 characters"
+                validators={[VALIDATOR_MINLENGTH(6)]}
+                onFormHandler={onFormHandler}
+            />
+            <Button
+                className="bg-transparent text-center text-stone-500 block font-normal hover:text-stone-400 hover:bg-transparent"
+                to={"/account"}
+            >
+                Login
+            </Button>
+            <Button
+                variant="signup"
+                type="submit"
+                disabled={!formState.isFormValid}
+            >
+                {isLoading ? "Signing up" : "Sign up"}
+            </Button>
+        </FormCard>
     );
 };
 

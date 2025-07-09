@@ -54,20 +54,10 @@ const Map = ({ isMapOpen, location, name }) => (
 
 const Place = ({ place, refreshPlaces }) => {
     const navigate = useNavigate();
-    const [isMapOpen, setisMapOpen] = useState(false);
-    const dialogRef = useRef();
     const { isLoading, error, sendRequest } = useHttp();
     const { userId } = useContext(authContext);
 
     const { isLoggined, token } = useContext(authContext);
-
-    const openMapHandler = () => {
-        setisMapOpen(true);
-    };
-
-    const closeMapHandler = () => {
-        setisMapOpen(close);
-    };
 
     const deletePlaceHandler = async (e) => {
         e.preventDefault();
@@ -95,69 +85,52 @@ const Place = ({ place, refreshPlaces }) => {
         }
     };
 
+    const { name, address, image } = place;
+
     return (
         <li>
-            <Dialog
-                ref={dialogRef}
-                isMapOpen={isMapOpen}
-                onClose={closeMapHandler}
-            >
-                <h2 className="text-xl font-semibold mb-2">
-                    Mapping your destination...
-                </h2>
-                <Map
-                    isMapOpen={isMapOpen}
-                    location={place.lotion}
-                    name={place.name}
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden w-72">
+                <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/${image}`}
+                    alt={name}
+                    className="w-full h-40 object-cover"
                 />
-                <div className="mt-4 flex justify-end gap-2">
-                    <button
-                        onClick={closeMapHandler}
-                        className="bg-red-500 text-white px-4 py-2 rounded"
-                    >
-                        Close
-                    </button>
-                </div>
-            </Dialog>
-            <Card addClass="bg-stone-800 hover:translate-y-[-8px]">
-                <div>
-                    <img
-                        src={`${import.meta.env.VITE_BACKEND_URL}/${
-                            place.image
-                        }`}
-                        className="w-80 h-80 object-cover"
-                    />
-                </div>
+                <div className="p-4">
+                    <h2 className="text-lg font-bold text-gray-800">{name}</h2>
+                    <p className="text-sm text-gray-500 flex items-center mt-1">
+                        📍 {address}
+                    </p>
 
-                <div className="center flex-col my-3">
-                    <h2 className="text-xl font-bold my-2">{place.name}</h2>
-                    <p className="">{place.address}</p>
-                    <p className="opacity-50">{place.description}</p>
+                    {/* {creator && (
+                        <p className="mt-2 text-xs text-gray-400 italic">
+                            Added by {creator}
+                        </p>
+                    )} */}
                 </div>
-                <div className="center flex-row">
+                <div className="center flex-row py-2 gap-2">
                     <Button
-                        onClick={openMapHandler}
-                        addClass="bg-orange-800 hover:bg-orange-700"
+                        to={`/${userId}/places/${place._id}`}
+                        variant="orange"
                     >
-                        View on map
+                        View Detail
                     </Button>
                     {isLoggined && userId === place.userId && (
                         <>
-                            <Button
-                                addClass="bg-blue-800 hover:bg-blue-700"
-                                to={`/places/${place._id}`}
-                            >
+                            <Button variant="info" to={`/places/${place._id}`}>
                                 Edit
                             </Button>
-                            <form onSubmit={deletePlaceHandler}>
-                                <Button addClass="bg-red-800 hover:bg-red-700">
-                                    {isLoading ? "Deleting" : "Delete"}
+                            <form
+                                id="delete-place"
+                                onSubmit={deletePlaceHandler}
+                            >
+                                <Button variant="danger">
+                                    {isLoading ? "Deleting..." : "Delete"}
                                 </Button>
                             </form>
                         </>
                     )}
                 </div>
-            </Card>
+            </div>
         </li>
     );
 };

@@ -25,7 +25,7 @@ const UsersPage = () => {
 
     return (
         <>
-            {isLoading && <Loading />}
+            {isLoading && <Loading loading={isLoading} />}
             {!isLoading && data && <UsersList users={data.users} />}
         </>
     );

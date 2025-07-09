@@ -11,8 +11,8 @@ const useHttp = () => {
         const signal = controller.signal;
 
         activeHttpReq.current.push(controller);
+        setIsLoading(true);
         try {
-            setIsLoading(true);
             const res = await fetch(url, {
                 method: method || "GET",
                 body: !body && !method ? null : body,
@@ -46,6 +46,11 @@ const useHttp = () => {
             console.log(err);
             setIsLoading(false);
             setError(err.message);
+        } finally {
+            activeHttpReq.current = activeHttpReq.current.filter(
+                (req) => req !== controller
+            );
+            setIsLoading(activeHttpReq.current.length > 0);
         }
     }, []);
 

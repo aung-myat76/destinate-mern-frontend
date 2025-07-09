@@ -9,12 +9,11 @@ const inputReducer = (state, action) => {
                 value: action.value,
                 isValid: validate(action.value, action.validators),
             };
-        case "TOUCHED": {
+        case "TOUCHED":
             return {
                 ...state,
                 isTouched: true,
             };
-        }
         default:
             return state;
     }
@@ -23,23 +22,23 @@ const inputReducer = (state, action) => {
 const Input = ({
     id,
     onFormHandler,
-    inputType = "input",
-    type = "text",
+    inputType = "input", // "input" or "textarea"
+    type = "text", // input type: text, email, password etc.
     addClass = "",
-    initialValue,
-    initialValidity,
-    validators,
-    errorText = "",
-    placeholder,
+    initialValue = "",
+    initialValidity = false,
+    validators = [],
+    errorText = "Invalid input",
+    placeholder = "",
     ...otherprops
 }) => {
     const [inputState, dispatch] = useReducer(inputReducer, {
-        value: initialValue || "",
-        isValid: initialValidity || false,
+        value: initialValue,
+        isValid: initialValidity,
         isTouched: false,
     });
 
-    const { value, isValid } = inputState;
+    const { value, isValid, isTouched } = inputState;
 
     useEffect(() => {
         onFormHandler(id, value, isValid);
@@ -53,50 +52,54 @@ const Input = ({
         });
     };
 
-    const BlurInputHandler = () => {
+    const blurInputHandler = () => {
         dispatch({ type: "TOUCHED" });
     };
 
-    const inputClass = `w-[250px] text-stone-700 p-3 my-2 rounded-md bg-stone-100 border-b-4 border-b-blue-500  ${addClass} focus:outline-none focus:border-b-green-500 ${
-        !inputState.isValid && inputState.isTouched
-            ? "border-b-red-500 focus:border-b-red-500"
-            : null
-    } md:w-[400px]`;
+    const baseInputStyle = `
+      w-full p-3 rounded-lg border focus:outline-none transition
+      ${
+          isTouched && !isValid
+              ? "border-red-500 focus:ring-red-500"
+              : "border-stone-300 focus:ring-2 focus:ring-stone-500"
+      }
+      bg-stone-100 text-stone-800 ${addClass}
+    `;
 
     let inputElement;
 
     if (inputType === "textarea") {
         inputElement = (
             <textarea
+                id={id}
                 placeholder={placeholder}
-                className={`${inputClass}`}
-                value={inputState.value}
+                className={baseInputStyle}
+                value={value}
                 onChange={changeInputHandler}
-                onBlur={BlurInputHandler}
+                onBlur={blurInputHandler}
                 {...otherprops}
             />
         );
     } else {
         inputElement = (
             <input
-                placeholder={placeholder}
+                id={id}
                 type={type}
-                className={`${inputClass}`}
-                value={inputState.value}
+                placeholder={placeholder}
+                className={baseInputStyle}
+                value={value}
                 onChange={changeInputHandler}
-                onBlur={BlurInputHandler}
+                onBlur={blurInputHandler}
                 {...otherprops}
             />
         );
     }
 
     return (
-        <div className="center flex-col mb-3">
+        <div className="flex flex-col gap-1 mb-4 w-full max-w-md">
             {inputElement}
-            {!inputState.isValid && inputState.isTouched && (
-                <p className="font-bold text-red-500 max-w-[450px]">
-                    {errorText}
-                </p>
+            {isTouched && !isValid && (
+                <p className="text-red-500 text-sm font-medium">{errorText}</p>
             )}
         </div>
     );

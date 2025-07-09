@@ -13,3 +13,58 @@
 .headerText {
     @apply text-center font-bold text-2xl py-3;
 }
+
+form:not(#delete-place) button {
+    @apply m-auto w-[80%] block my-3;
+}
+
+/* loading animation */
+.spinner-enter {
+    opacity: 0;
+}
+.spinner-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+.spinner-exit {
+    opacity: 1;
+}
+.spinner-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #c2410c;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* drawer animation */
+.drawer-enter {
+    transform: translateX(100%);
+}
+.drawer-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-in-out;
+}
+.drawer-exit {
+    transform: translateX(0);
+}
+.drawer-exit-active {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in-out;
+}

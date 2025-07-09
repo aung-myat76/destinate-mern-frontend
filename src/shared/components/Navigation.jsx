@@ -64,10 +64,7 @@ const Navigation = ({ onClose }) => {
                             </NavLink>
                         </li>
                         <li>
-                            <Button
-                                onClick={logoutHandler}
-                                addClass="bg-red-500"
-                            >
+                            <Button variant="danger" onClick={logoutHandler}>
                                 Logout
                             </Button>
                         </li>
